@@ -55,7 +55,7 @@ public class ContactsBook {
                 System.out.println("Вы ввели что-то не то. И все пошло под откос! Звоните маме!");
             }
             if (nameCont.isEmpty()) {
-                System.out.println("Поле не может быть пустым");
+                System.out.println("Поле не может быть пустым.");
             } else break;
         }
         System.out.println("Введите номер телефона: ");
