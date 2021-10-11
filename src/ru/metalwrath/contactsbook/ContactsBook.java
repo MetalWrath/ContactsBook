@@ -325,7 +325,7 @@ public class ContactsBook {
         Statement stm;
         ResultSet rs = null;
 
-        String url = "jdbc:postgresql://89.108.77.128:5432/postgres";
+        String url = "jdbc:postgresql://localhost:5432/postgres";
         String user = "postgres";
         String password = "12345";
 
