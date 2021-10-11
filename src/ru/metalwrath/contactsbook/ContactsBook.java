@@ -46,10 +46,10 @@ public class ContactsBook {
     protected void createContact() {
 
         String nameCont = "", numberCont = "", addressCont = "", companyCont = "";
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("Введите имя: ");
         while (true) {
-            try {
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
                 nameCont = br.readLine();
             } catch (IOException e) {
                 System.out.println("Вы ввели что-то не то. И все пошло под откос! Звоните маме!");
@@ -60,7 +60,7 @@ public class ContactsBook {
         }
         System.out.println("Введите номер телефона: ");
         while (true) {
-            try {
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
                 numberCont = br.readLine();
             } catch (IOException e) {
                 System.out.println("Вы ввели что-то не то. И все пошло под откос! Звоните маме!");
@@ -80,14 +80,14 @@ public class ContactsBook {
 
 
         System.out.println("(Можно оставить пустым) Введите адрес: ");
-        try {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             addressCont = br.readLine();
         } catch (IOException e) {
             System.out.println("Вы ввели что-то не то. И все пошло под откос! Звоните маме!");
         }
 
         System.out.println("(Можно оставить пустым) Введите название компании: ");
-        try {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             companyCont = br.readLine();
         } catch (IOException e) {
             System.out.println("Вы ввели что-то не то. И все пошло под откос! Звоните маме!");
@@ -125,14 +125,14 @@ public class ContactsBook {
     }
     protected void searchContact() {
         int answer = 0;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("По какому полю будем искать?");
         System.out.println("1. По имени.");
         System.out.println("2. По городу.");
         System.out.println("3. По компании.");
         System.out.println("4. Венуться в главное меню.");
 
-        try {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             answer = Integer.parseInt(br.readLine());
         } catch (Exception e) {
             System.out.println("Вы ввели неверное значение! Возможно у вас кривые пальцы и вы не туда нажали. Только числа");
@@ -172,7 +172,7 @@ public class ContactsBook {
 
     protected void changeContact() {
         int answer = 0;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         System.out.println("Какое поле будем изменять?");
         System.out.println("1. Имя.");
         System.out.println("2. Номер телефона.");
@@ -180,7 +180,7 @@ public class ContactsBook {
         System.out.println("4. Компанию.");
         System.out.println("5. Венуться в главное меню.");
 
-        try {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             answer = Integer.parseInt(br.readLine());
         } catch (Exception e) {
             System.out.println("Вы ввели неверное значение! Возможно у вас кривые пальцы и вы не туда нажали. Только числа");
@@ -283,6 +283,7 @@ public class ContactsBook {
 
     protected void showRSBase(ResultSet rs){
         System.out.println("Вот, что мы имеем: ");
+        System.out.println();
         try {
             while (rs.next()) {
 
@@ -318,6 +319,12 @@ public class ContactsBook {
             System.out.println("Ошибка ввода имени для поиска!");
             e.printStackTrace();
         }
+        try {
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка закрытия потока");
+            e.printStackTrace();
+        }
         return search;
     }
     protected ResultSet createConnect(String query) {
@@ -334,6 +341,7 @@ public class ContactsBook {
             stm = con.createStatement();
             try {
                 rs = stm.executeQuery(query);
+                con.close();
             } catch (PSQLException e) {
                 //IGNORE
             }
@@ -342,6 +350,7 @@ public class ContactsBook {
             System.out.println("Ошибка соединения с базой. Проверьте подключение.");
             e.printStackTrace();
         }
+
         return rs;
 
     }
